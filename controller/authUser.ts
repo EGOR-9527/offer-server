@@ -46,4 +46,24 @@ export default class ControllerAuth {
       res.status(500).json({ message: 'Ошибка сервера при входе' });
     }
   }
+
+  async refresh(req: Request, res: Response) {
+    try {
+      const { refreshToken } = req.body;
+
+      const service = new ServiceAuth();
+      const data = await service.refresh(refreshToken);
+
+      res.cookie('token', data.accessToken, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000, // 1 день
+      });
+
+      res.status(200).json(data); // 200 OK
+    } catch (error: any) {
+      console.error('Ошибка при обновлении токена:', error);
+      res.status(500).json({ message: 'Ошибка сервера при обновлении токена' });
+    }
+  }
 }

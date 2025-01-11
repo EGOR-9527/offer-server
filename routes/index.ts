@@ -14,6 +14,7 @@ const offersController = new ControllerOffers();
 // Регистрация и авторизация
 router.post('/register', authController.register.bind(authController));
 router.post('/login', authController.login.bind(authController));
+router.post('/refresh', authController.refresh.bind(authController)); // Добавляем маршрут для обновления токена
 
 // Защищенные маршруты с использованием middleware authenticate
 router.post(
@@ -38,7 +39,7 @@ router.get('/receivefeedback', offersController.ReceiveFeedback.bind(offersContr
 // Получение списка категорий (без аутентификации)
 router.get('/categories', offersController.getCategories.bind(offersController));
 
-// Получение списка статусов (без аутентификации)
+// Пол учение списка статусов (без аутентификации)
 router.get('/statuses', offersController.getStatuses.bind(offersController));
 
 // Получение предложений с фильтрацией, сортировкой и пагинацией (без аутентификации)
